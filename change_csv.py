@@ -1,17 +1,16 @@
-
 """
 
 module prepares the source csv file for the csv file of the required format
 
 """
 
-import numpy as np
-import pandas as pd
-import cv2
 import csv
-
 from os import listdir
 from os.path import isfile, join, splitext
+
+import cv2
+import numpy as np
+import pandas as pd
 
 LOG_FILENAME = "log.txt"
 
@@ -26,7 +25,6 @@ row_number = str(row_number)
 dict_for_image = {}
 
 for item in listdir(input_img):
-
     image = cv2.imread(join(input_img, item), cv2.IMREAD_COLOR)
 
     x_0, y_0, _ = image.shape
@@ -61,7 +59,6 @@ item = 0
 for box in boxes:
     image_name = image_list[item]
     for i in box:
-
         d = dict.fromkeys([tuple(i)], (image_name + '.png'))
 
         dict_for_box.update(d)
@@ -73,7 +70,6 @@ with open("train_image.csv", 'w', newline='') as f:
     wr.writerows([('filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax')])
     count = 0
     for j in dict_for_box.keys():
-
         x_min = j[0]
         y_min = j[1]
         x_max = j[2]
@@ -87,8 +83,3 @@ with open("train_image.csv", 'w', newline='') as f:
 
 test_df = pd.read_csv("train_image.csv")
 print(test_df)
-
-
-
-
-

@@ -5,16 +5,14 @@ module loads the model with the .pb extension, and allows you to get predictions
 """
 
 import time
-import tensorflow.compat.v1 as tf
-import numpy as np
-import matplotlib.pyplot as plt
-import pandas
 import warnings
+from os import path
 
+import numpy as np
+import pandas
+import tensorflow.compat.v1 as tf
 from PIL import Image
 from object_detection.utils import label_map_util
-
-from os import listdir, path
 
 tf.enable_eager_execution()
 
@@ -42,7 +40,6 @@ warnings.filterwarnings('ignore')
 
 
 def load_image_into_numpy_array(path):
-
     return np.array(Image.open(path))
 
 
@@ -55,20 +52,14 @@ with open("answer/submission.csv", "w") as output:
         image_path = row["image_name"] + ".png"
         print('Running inference for {}... '.format(image_path), end='')
         image_path = path.join(IMAGE_PATHS, image_path)
-
         image_np = load_image_into_numpy_array(image_path)
-
         input_tensor = tf.convert_to_tensor(image_np)
-
         input_tensor = input_tensor[tf.newaxis, ...]
-
         detections = detect_fn(input_tensor)
-
         num_detections = int((detections.pop('num_detections')))
         detections = {key: value[0, :num_detections].numpy()
                       for key, value in detections.items()}
         detections['num_detections'] = num_detections
-
         detections['detection_classes'] = detections['detection_classes'].astype(np.int64)
         boxes = []
         count_box = 0
@@ -95,4 +86,3 @@ with open("answer/submission.csv", "w") as output:
 
         print('Image #{} processed'.format(str(count)))
         count += 1
-

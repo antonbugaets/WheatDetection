@@ -1,4 +1,3 @@
-
 """
 Example Usage :
 python export_inference_graph.py
@@ -16,9 +15,10 @@ output_directory
 module provides translation of the specified checkpoins into a model with the .pb extension
 
 """
+import sys
+
 import tensorflow.compat.v1 as tf
 
-import sys
 sys.path.append("D:\\Users\\inet\\Documents\\GitHub\\Sber_test\\models\\research\\slim")
 
 from google.protobuf import text_format
@@ -28,8 +28,8 @@ from object_detection.protos import pipeline_pb2
 flags = tf.app.flags
 
 flags.DEFINE_string('input_type', 'image_tensor', 'Type of input node. Can be '
-                    'one of [`image_tensor`, `encoded_image_string_tensor`, '
-                    '`tf_example`]')
+                                                  'one of [`image_tensor`, `encoded_image_string_tensor`, '
+                                                  '`tf_example`]')
 flags.DEFINE_string('input_shape', None,
                     'If input_type is `image_tensor`, this can explicitly set '
                     'the shape of this input tensor to a fixed size. The '
@@ -81,38 +81,38 @@ FLAGS = flags.FLAGS
 
 
 def main(_):
-  pipeline_config = pipeline_pb2.TrainEvalPipelineConfig()
-  with tf.gfile.GFile(FLAGS.pipeline_config_path, 'r') as f:
-    text_format.Merge(f.read(), pipeline_config)
-  text_format.Merge(FLAGS.config_override, pipeline_config)
-  if FLAGS.input_shape:
-    input_shape = [
-        int(dim) if dim != '-1' else None
-        for dim in FLAGS.input_shape.split(',')
-    ]
-  else:
-    input_shape = None
-  if FLAGS.use_side_inputs:
-    side_input_shapes, side_input_names, side_input_types = (
-        exporter.parse_side_inputs(
-            FLAGS.side_input_shapes,
-            FLAGS.side_input_names,
-            FLAGS.side_input_types))
-  else:
-    side_input_shapes = None
-    side_input_names = None
-    side_input_types = None
-  if FLAGS.additional_output_tensor_names:
-    additional_output_tensor_names = list(
-        FLAGS.additional_output_tensor_names.split(','))
-  else:
-    additional_output_tensor_names = None
-  exporter.export_inference_graph(
-      FLAGS.input_type, pipeline_config, FLAGS.trained_checkpoint_prefix,
-      FLAGS.output_directory, input_shape=input_shape,
-      write_inference_graph=FLAGS.write_inference_graph,
-      additional_output_tensor_names=additional_output_tensor_names)
+    pipeline_config = pipeline_pb2.TrainEvalPipelineConfig()
+    with tf.gfile.GFile(FLAGS.pipeline_config_path, 'r') as f:
+        text_format.Merge(f.read(), pipeline_config)
+    text_format.Merge(FLAGS.config_override, pipeline_config)
+    if FLAGS.input_shape:
+        input_shape = [
+            int(dim) if dim != '-1' else None
+            for dim in FLAGS.input_shape.split(',')
+        ]
+    else:
+        input_shape = None
+    if FLAGS.use_side_inputs:
+        side_input_shapes, side_input_names, side_input_types = (
+            exporter.parse_side_inputs(
+                FLAGS.side_input_shapes,
+                FLAGS.side_input_names,
+                FLAGS.side_input_types))
+    else:
+        side_input_shapes = None
+        side_input_names = None
+        side_input_types = None
+    if FLAGS.additional_output_tensor_names:
+        additional_output_tensor_names = list(
+            FLAGS.additional_output_tensor_names.split(','))
+    else:
+        additional_output_tensor_names = None
+    exporter.export_inference_graph(
+        FLAGS.input_type, pipeline_config, FLAGS.trained_checkpoint_prefix,
+        FLAGS.output_directory, input_shape=input_shape,
+        write_inference_graph=FLAGS.write_inference_graph,
+        additional_output_tensor_names=additional_output_tensor_names)
 
 
 if __name__ == '__main__':
-  tf.app.run()
+    tf.app.run()

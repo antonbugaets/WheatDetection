@@ -10,21 +10,22 @@ module is needed to convert csv file to record format file
 
 """
 
+from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-from __future__ import absolute_import
 
-import os
 import io
-import pandas as pd
-import tensorflow as tf
+import os
 import sys
+
+import pandas as pd
 import tensorflow.compat.v1 as tf
+
 sys.path.append("../../models/research")
 
 from PIL import Image
 from object_detection.utils import dataset_util
-from collections import namedtuple, OrderedDict
+from collections import namedtuple
 
 flags = tf.app.flags
 flags.DEFINE_string('csv_input', '', 'Path to the CSV input')
@@ -35,7 +36,6 @@ FLAGS = flags.FLAGS
 
 
 def class_text_to_int(row_label):
-
     return 1
 
 
