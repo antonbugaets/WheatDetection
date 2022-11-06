@@ -1,0 +1,6 @@
+cv2
+tensorflow
+object_detection
+numpy
+pandas
+PIL
