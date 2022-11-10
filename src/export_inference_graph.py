@@ -15,11 +15,9 @@ output_directory
 module provides translation of the specified checkpoins into a model with the .pb extension
 
 """
+
 import sys
-
 import tensorflow.compat.v1 as tf
-
-sys.path.append("D:\\Users\\inet\\Documents\\GitHub\\Sber_test\\models\\research\\slim")
 
 from google.protobuf import text_format
 from object_detection import exporter

@@ -12,8 +12,6 @@ module is required to train the model
 
 import sys
 
-sys.path.append("D:\\Users\\inet\\Documents\\GitHub\\Sber_test\\models\\research\\slim")
-
 import functools
 import json
 import os
