@@ -1,0 +1,6 @@
+opencv_python==3.4.0.14
+tensorflow==1.14
+object_detection==0.0.3
+numpy>=1.16.*
+pandas>=1.15
+PIL
