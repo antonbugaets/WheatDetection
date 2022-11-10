@@ -27,17 +27,31 @@ from object_detection.protos import pipeline_pb2
 
 flags = tf.app.flags
 
+flagsString2 = ('If input_type is `image_tensor`, this can explicitly set '
+                'the shape of this input tensor to a fixed size. The '
+                'dimensions are to be provided as a comma-separated list '
+                'of integers. A value of -1 can be used for unknown '
+                'dimensions. If not specified, for an `image_tensor, the '
+                'default shape will be partially specified as '
+                '`[None, None, None, 3]`.')
+
+flagsString3 = ('If use_side_inputs is True, this explicitly sets '
+                'the shape of the side input tensors to a fixed size. The '
+                'dimensions are to be provided as a comma-separated list '
+                'of integers. A value of -1 can be used for unknown '
+                'dimensions. A `/` denotes a break, starting the shape of '
+                'the next side input tensor. This flag is required if '
+                'using side inputs.')
+
+flagsString4 = ('If use_side_inputs is True, this explicitly sets '
+                'the type of the side input tensors. The '
+                'dimensions are to be provided as a comma-separated list '
+                'of types, each of `string`, `integer`, or `float`. '
+                'This flag is required if using side inputs.')
 flags.DEFINE_string('input_type', 'image_tensor', 'Type of input node. Can be '
                                                   'one of [`image_tensor`, `encoded_image_string_tensor`, '
                                                   '`tf_example`]')
-flags.DEFINE_string('input_shape', None,
-                    'If input_type is `image_tensor`, this can explicitly set '
-                    'the shape of this input tensor to a fixed size. The '
-                    'dimensions are to be provided as a comma-separated list '
-                    'of integers. A value of -1 can be used for unknown '
-                    'dimensions. If not specified, for an `image_tensor, the '
-                    'default shape will be partially specified as '
-                    '`[None, None, None, 3]`.')
+flags.DEFINE_string('input_shape', None, flagsString2)
 flags.DEFINE_string('pipeline_config_path', None,
                     'Path to a pipeline_pb2.TrainEvalPipelineConfig config '
                     'file.')
@@ -56,19 +70,9 @@ flags.DEFINE_string('additional_output_tensor_names', None,
 flags.DEFINE_boolean('use_side_inputs', False,
                      'If True, uses side inputs as well as image inputs.')
 flags.DEFINE_string('side_input_shapes', None,
-                    'If use_side_inputs is True, this explicitly sets '
-                    'the shape of the side input tensors to a fixed size. The '
-                    'dimensions are to be provided as a comma-separated list '
-                    'of integers. A value of -1 can be used for unknown '
-                    'dimensions. A `/` denotes a break, starting the shape of '
-                    'the next side input tensor. This flag is required if '
-                    'using side inputs.')
+                    flagsString3)
 flags.DEFINE_string('side_input_types', None,
-                    'If use_side_inputs is True, this explicitly sets '
-                    'the type of the side input tensors. The '
-                    'dimensions are to be provided as a comma-separated list '
-                    'of types, each of `string`, `integer`, or `float`. '
-                    'This flag is required if using side inputs.')
+                    flagsString4)
 flags.DEFINE_string('side_input_names', None,
                     'If use_side_inputs is True, this explicitly sets '
                     'the names of the side input tensors required by the model '

@@ -6,7 +6,7 @@ module prepares the source csv file for the csv file of the required format
 
 import csv
 from os import listdir
-from os.path import isfile, join, splitext
+from os.path import join
 
 import cv2
 import numpy as np
@@ -64,7 +64,7 @@ for box in boxes:
         dict_for_box.update(d)
     item += 1
 
-with open("train_image.csv", 'w', newline='') as f:
+with open("../resources/train_image.csv", 'w', newline='') as f:
     wr = csv.writer(f, delimiter=',', quotechar=',',
                     quoting=csv.QUOTE_MINIMAL)
     wr.writerows([('filename', 'width', 'height', 'class', 'xmin', 'ymin', 'xmax', 'ymax')])
@@ -81,5 +81,5 @@ with open("train_image.csv", 'w', newline='') as f:
                        float("%.2f" % x_min), float("%.2f" % y_min), float("%.2f" % x_max), float("%.2f" % y_max))])
         count += 1
 
-test_df = pd.read_csv("train_image.csv")
+test_df = pd.read_csv("../resources/train_image.csv")
 print(test_df)

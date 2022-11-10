@@ -17,7 +17,7 @@ from object_detection.utils import label_map_util
 tf.enable_eager_execution()
 
 export_dir = "output_directory/saved_model"
-PATH_TO_LABELS = 'label_map.pbtxt'
+PATH_TO_LABELS = '../resources/label_map.pbtxt'
 IMAGE_PATHS = "C:/Users/inet/Downloads/test"
 
 print('Loading model...', end='')
